@@ -1,0 +1,43 @@
+// go instumentation
+// import and get 
+	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
+	"github.com/prometheus/client_golang/prometheus/promauto"
+--------------------------------------------------------------------------------------
+// counter
+var
+	REQUEST_COUNT = promauto.NewCounter(prometheus.CounterOpts{
+		Name: "go_app_requests_count",
+		Help: "Total App HTTP Requests count.",
+	})
+// use
+REQUEST_COUNT.Inc()
+--------------------------------------------------------------------------------------
+// gauge 
+var
+	REQUEST_INPROGRESS = promauto.NewGauge(prometheus.GaugeOpts{
+		Name: "go_app_requests_inprogress",
+		Help: "Number of application requests in progress",
+	})
+// use 
+REQUEST_INPROGRESS.Inc()
+REQUEST_INPROGRESS.Dec()
+--------------------------------------------------------------------------------------
+// histogram
+var 
+	REQUEST_RESPOND_TIME = promauto.NewHistogramVec(prometheus.HistogramOpts{
+		Name: "go_app_response_latency_seconds",
+		Help: "Response latency in seconds.",
+	}, []string{"path"})
+// use
+REQUEST_RESPOND_TIME.WithLabelValues(path).Observe(time_taken.Seconds())
+
+--------------------------------------------------------------------------------------
+// Summary
+var 
+	REQUEST_RESPOND_TIME = promauto.NewSummaryVec(prometheus.SummaryOpts{
+		Name: "go_app_response_latency_seconds",
+		Help: "Response latency in seconds.",
+	}, []string{"path"})
+// use 
+REQUEST_RESPOND_TIME.WithLabelValues(path).Observe(time_taken.Seconds())

@@ -1,0 +1,10 @@
+- targets:
+  - localhost:9100
+  labels:
+    team: "development"
+    region: "Mumbai"
+- targets:
+  - localhost:9100
+  labels:
+    team: "sdsd"
+    region: "fgfggg"
